@@ -1,0 +1,18 @@
+{
+  "name": "抢沙发 by 爱生活，爱凡华",
+  "version": "1.4",
+  "background": { "scripts": ["jquery-2.0.3.min.js","md5.js","background.js"] },
+  "permissions": [
+    "tabs", "http://*/*", "storage", "notifications", "tabs"
+  ],
+  "browser_action": {
+    "default_icon": "alert.png",
+    "default_title": "抢沙发 by 爱生活，爱凡华",      // optional; shown in tooltip
+    "default_popup": "config.htm"        // optional
+  },
+  "web_accessible_resources": [
+    "alert.png"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "manifest_version": 2
+}
