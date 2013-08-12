@@ -11,7 +11,7 @@ function query1(index,re, url){
 	if(url.indexOf('?')== -1){
 		url += '?';
 	}
-	$.ajax({url:url + "&testran=" + Math.random(),timeout:3000,success:function(html){
+	$.ajax({url:url + "&testran=" + Math.random(),timeout:40000,success:function(html){
 		//var re = /<th class="common">\s*<em>.*<\/em>\s*(<a.*>.*<\/a>)/g;
 		var r = "";   
 		var results = [];

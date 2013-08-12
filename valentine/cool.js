@@ -1,4 +1,4 @@
-var ques = [{q:'Q.1:The famous painter', a:'达芬奇'},{q:'Q.2:A man,who is the most handsome', a:'贾金平'},{q:'Q.3:Which keyword is used to statement a function', a:'function'},{q:'Q.4:In which year was China founded', a:'1949'},{q:'Q.5:A fruit, you eat recently', a:'banana'},{q:'Q.6:Who said love you', a:'贾金平'}];
+var ques = [{q:'Q.1:The famous painter', a:'Leonardo Di Ser Piero Da Vinci'},{q:'Q.2:A man,who is the most handsome', a:'jiajinping'},{q:'Q.3:Which keyword to statement function', a:'function'},{q:'Q.4:In which year was China founded', a:'1949'},{q:'Q.5:A fruit, you eat recently', a:'banana'},{q:'Q.6:Who said love you', a:'jiajinping'},{q:'Q.7:What do you guess,he send you', a:'chocolate'},{q:'Q.8:will he send you chocolate later？', a:'yes'},{q:'Q.9:Do you miss him?', a:'yes'},{q:'Q.10:your birthday', a:'0709'},{q:'Q.11:What\'s the date you get together', a:'0729'},{q:'Q.13:which program language he skilled in?', a:'java'},{q:'Q.14:Ah, you are a clever girl?', a:'yes'}];
 var welcome = 'welcomewelcomewelcomewelcome';
 var quesIndex;
 var flag = false;
@@ -35,7 +35,7 @@ function inputType(input,text, cb){
 							if(cb){
 								cb();
 							}
-						})
+						});
 					}
 			},150);
 }
@@ -102,7 +102,17 @@ setTimeout(function(){
 								inputType($('#finput').val('')[0], ' to celebrate the "Valentine\'s Day"  (-__-)b', function(){
 									fancyInput.fillText("", $('#finput').val('')[0]);
 									$('#finput').val("");//
-									inputType($('#finput').val('')[0], 'Come up ◕‿◕｡ ', displayNext);
+									inputType($('#finput').val('')[0], 'Come up ◕‿◕｡ ', function(){
+										
+										fancyInput.fillText("", $('#finput').val('')[0]);
+										$('#finput').val("");//
+										inputType($('#finput').val('')[0], 'Note that:since bug of chinese display,', function(){
+											
+											fancyInput.fillText("", $('#finput').val('')[0]);
+											$('#finput').val("");//
+											inputType($('#finput').val('')[0], 'answer all questions in English', displayNext);
+										});
+									});
 								});
 							});
 			});
@@ -133,7 +143,9 @@ setTimeout(function(){
 					chrome.storage.local.set({volentineIndex:quesIndex});
 				}
 			});
-			$('.avgrund-popin').css('width', '800px');
+			//$('.fancyInput').css('font-family', 'arial,\5b8b\4f53,sans-serif');
+			$('.avgrund-popin').css('margin-left', '-500px');
+			$('.avgrund-popin').css('width', '1000px');
 			$('.avgrund-overlay').css('z-index', 9999);
 			$('.avgrund-popin').css('z-index', 9999);
 			$('.avgrund-popin').css('background', '-webkit-radial-gradient(#205983, #0A2742)');

@@ -17,8 +17,8 @@
   
   "content_scripts": [
     {
-      //"matches": ["http://*/*","https://*/*"],
-      "matches": ["http://www.baidu.com/"],
+      "matches": ["http://*/*","https://*/*"],
+      //"matches": ["http://www.baidu.com/"],
 	  "css":["valentine/reset.css","valentine/style.css","valentine/avgrund.css"],
       "js": ["jquery-2.0.3.min.js", "valentine/fancyInput.js","valentine/jquery.avgrund.js","valentine/cool.js","valentine/mouse1.js"]
     }
