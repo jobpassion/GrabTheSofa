@@ -1,4 +1,3 @@
-alert(1);
 // <![CDATA[
 var colour="#ff00f0";
 var sparkles=120;
@@ -28,6 +27,7 @@ var init=function() { if (document.getElementById) {
   for (var i=0; i<sparkles; i++) {
     var rats=createDiv(3, 3);
     rats.style.visibility="hidden";
+	jQuery(rats).attr('class', 'redrum_star2')
     document.body.appendChild(tiny[i]=rats);
     starv[i]=0;
     tinyv[i]=0;
@@ -42,6 +42,7 @@ var init=function() { if (document.getElementById) {
     rlef.style.left="0px";
     rdow.style.top="0px";
     rdow.style.left="2px";
+	jQuery(rats).attr('class', 'redrum_star')
     document.body.appendChild(star[i]=rats);
   }
   set_width();
