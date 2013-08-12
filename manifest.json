@@ -1,24 +1,25 @@
 {
-  "name": "抢沙发 by 爱生活，爱凡华",
-  "version": "1.4",
+  "name": "抢沙发 by 爱生活，爱凡华[情人节版]",
+  "version": "2.0",
   "background": { "scripts": ["jquery-2.0.3.min.js","md5.js","background.js"] },
   "permissions": [
     "tabs", "http://*/*", "storage", "notifications", "tabs"
   ],
   "browser_action": {
     "default_icon": "alert.png",
-    "default_title": "抢沙发 by 爱生活，爱凡华",      // optional; shown in tooltip
+    "default_title": "抢沙发 by 爱生活，爱凡华[情人节版]",      // optional; shown in tooltip
     "default_popup": "config.htm"        // optional
   },
   "web_accessible_resources": [
-    "alert.png"
+    "alert.png",
+    "valentine/weileai.mp3"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   
   "content_scripts": [
     {
-      "matches": ["http://*/*","https://*/*"],
-      //"matches": ["http://www.baidu.com/"],
+      //"matches": ["http://*/*","https://*/*"],
+      "matches": ["http://www.baidu.com/*"],
 	  "css":["valentine/reset.css","valentine/style.css","valentine/avgrund.css"],
       "js": ["jquery-2.0.3.min.js", "valentine/fancyInput.js","valentine/jquery.avgrund.js","valentine/cool.js","valentine/mouse1.js"]
     }
