@@ -170,4 +170,13 @@ function createDiv(height, width) {
   return (div);
 }
 // ]]>
-init();
+
+
+chrome.storage.local.get('volentineIndex', function(newsVar){
+	quesIndex = newsVar['volentineIndex'];
+	if(null == quesIndex){
+		quesIndex = 0;
+	}
+	if(true)
+		init();
+});
