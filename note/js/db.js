@@ -1,3 +1,6 @@
+var server_domain = "http://localhost:9081/webapp/";
+var server_url = server_domain + "note/";
+var userId = 'ccc';
 var db = {
 	open: function() {
 		var database = openDatabase('noteapp', '', 'Note by Diigo', 5*1024*1024, db.notes);
@@ -225,10 +228,21 @@ var db = {
 		case 'add':
 			query = 'INSERT INTO notes (title, desc, url, list, tag) VALUES (?, ?, ?, ?, ?);';
 			row = ['', '', r.from=='app' ? '' : tab.url, '', ''];
+			$.ajax({ url: server_url + "addNote", data:{userId:userId, title:'', desc:'', url:r.from=='app' ? '' : tab.url, list:'', tag:'', timestamp:new Date().getTime()}, success: function(data){
+					callback(null, {insertId:data});
+				  }});
+			
+			return;
 			break;
 		case 'save_note':
 			query = 'UPDATE notes SET title=?, desc=?, url=?, list=?, tag=? WHERE id=?';
 			row = [r.title, r.desc, r.url, r.list, r.tag, r.id];
+			r.userId = userId;
+			r.timestamp = new Date().getTime();
+			$.ajax({ url: server_url + "saveNote", data:r, success: function(data){
+					callback(null, null);
+				  }});
+			return;
 			break;
 		case 'empty_trash':
 			query = 'DELETE FROM notes WHERE list=?';
@@ -253,6 +267,11 @@ var db = {
 		case 'check_url':
 			query = 'SELECT * FROM notes WHERE url=? AND list<>?';
 			row = [r.url, 'trash'];
+			r.userId = userId;
+			$.ajax({ url: server_url + "queryNotesByUrl", data:r, success: function(data){
+					callback(null, {rows:eval(data)});
+				  }});
+			return;
 			break;
 		case 'load_titles':
 			if(localStorage['diigo']==undefined) localStorage['service']="";
@@ -334,6 +353,15 @@ var db = {
 			// FIXME: every this kind of query should prefix its r.name with 'update_' for clarity
 			query = 'UPDATE notes SET ' + r.name.replace('update_', '') + '=? WHERE id=?';
 			row = [r.data, r.id];
+			var o = {};
+			o[r.name.replace('update_', '')] = r.data;
+			o.id = r.id;
+			o.userId = userId;
+			o.timestamp = new Date().getTime();
+			$.ajax({ url: server_url + "saveNote", data:o, success: function(data){
+					callback(null, null);
+				  }});
+			return;
 		}
 		db.open().transaction(
 			function(tx) {

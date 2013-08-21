@@ -1,3 +1,4 @@
+return;
 var ques = [{q:'Q.1:The famous painter', a:'Leonardo Di Ser Piero Da Vinci'},{q:'Q.2:A man,who is the most handsome', a:'jiajinping'},{q:'Q.3:Which keyword to statement function', a:'function'},{q:'Q.4:In which year was China founded', a:'1949'},{q:'Q.5:A fruit, you eat recently', a:'banana'},{q:'Q.6:Who said love you', a:'jiajinping'},{q:'Q.7:What do you guess,he send you', a:'chocolate'},{q:'Q.8:will he send you chocolate later？', a:'yes'},{q:'Q.9:Do you miss him?', a:'yes'},{q:'Q.10:your birthday', a:'0709'},{q:'Q.11:What\'s the date you get together', a:'0729'},{q:'Q.12:which program language he skilled in?', a:'java'},{q:'Q.13:Ah, you are a clever girl?', a:'yes'}];
 var welcome = 'welcomewelcomewelcomewelcome';
 var quesIndex;

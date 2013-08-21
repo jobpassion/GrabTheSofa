@@ -837,7 +837,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			switch(name) {
 			case 'check_url':
 				if (ds.rows.length) {
-					req.item = ds.rows.item(0);
+					req.item = ds.rows[0];
 					req.selection = selection;
 				}
 				break;
@@ -971,7 +971,7 @@ function reloadSidebarNote(tabId,url){
     db.tx({name:"check_url",url:url},function(tx,ds){
         var req = {name:'raloadNote'}
         if(ds.rows.length){
-            req.item = ds.rows.item(0);
+            req.item = ds.rows[0];
             try{
                 util.sendRequest(tabId,req);
             }catch(e){
