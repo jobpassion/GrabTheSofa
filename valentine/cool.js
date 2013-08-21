@@ -1,3 +1,4 @@
+return;
 var ques = [{q:'Q.1:The famous painter', a:'达芬奇'},{q:'Q.2:A man,who is the most handsome', a:'贾金平'},{q:'Q.3:Which keyword is used to statement a function', a:'function'},{q:'Q.4:In which year was China founded', a:'1949'},{q:'Q.5:A fruit, you eat recently', a:'banana'},{q:'Q.6:Who said love you', a:'贾金平'}];
 var welcome = 'welcomewelcomewelcomewelcome';
 var quesIndex;

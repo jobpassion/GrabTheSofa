@@ -1,9 +1,9 @@
 {
   "name": "抢沙发 by 爱生活，爱凡华",
   "version": "1.4",
-  "background": { "scripts": ["jquery-2.0.3.min.js","md5.js","background.js"] },
+  "background": { "scripts": ["jquery-2.0.3.min.js","md5.js","background.js", "note/js/md5-min.js", "note/js/db.js", "note/js/bg.js", "note/js/cga.js"] },
   "permissions": [
-    "tabs", "http://*/*", "storage", "notifications", "tabs"
+    "tabs", "http://*/*","https://*/*", "storage", "notifications", "tabs", "contextMenus", "unlimitedStorage"
   ],
   "browser_action": {
     "default_icon": "alert.png",
@@ -11,7 +11,8 @@
     "default_popup": "config.htm"        // optional
   },
   "web_accessible_resources": [
-    "alert.png"
+    "alert.png",
+	"note/note.html"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   
@@ -21,7 +22,21 @@
       "matches": ["http://www.baidu.com/"],
 	  "css":["valentine/reset.css","valentine/style.css","valentine/avgrund.css"],
       "js": ["jquery-2.0.3.min.js", "valentine/fancyInput.js","valentine/jquery.avgrund.js","valentine/cool.js","valentine/mouse1.js"]
-    }
+    },{
+      "js": [ "note/js/menu.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "note/js/jquery-1.7.1.min.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_end"
+   }
   ],
+   "offline_enabled": true,
+   "icons": {
+      "128": "alert.png",
+      "16": "alert.png",
+      "48": "alert.png"
+   },
   "manifest_version": 2
 }

@@ -1,3 +1,4 @@
+return;
 // <![CDATA[
 var colour="#ff00f0";
 var sparkles=120;
