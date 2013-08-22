@@ -228,7 +228,7 @@ var db = {
 		case 'add':
 			query = 'INSERT INTO notes (title, desc, url, list, tag) VALUES (?, ?, ?, ?, ?);';
 			row = ['', '', r.from=='app' ? '' : tab.url, '', ''];
-			$.ajax({ url: server_url + "addNote", data:{userId:userId, title:'', desc:'', url:'', list:'', tag:'', timestamp:new Date().getTime()}, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "addNote", data:{userId:userId, title:'', desc:'', url:'', list:'', tag:'', timestamp:new Date().getTime()}, success: function(data){
 					callback(null, {insertId:data});
 				  }});
 			
@@ -239,7 +239,7 @@ var db = {
 			row = [r.title, r.desc, r.url, r.list, r.tag, r.id];
 			r.userId = userId;
 			r.timestamp = new Date().getTime();
-			$.ajax({ url: server_url + "saveNote", data:r, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "saveNote", data:r, success: function(data){
 					callback(null, null);
 				  }});
 			return;
@@ -268,7 +268,7 @@ var db = {
 			query = 'SELECT * FROM notes WHERE url=? AND list<>?';
 			row = [r.url, 'trash'];
 			r.userId = userId;
-			$.ajax({ url: server_url + "queryNotesByUrl", data:r, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "queryNotesByUrl", data:r, success: function(data){
 					callback(null, {rows:eval(data)});
 				  }});
 			return;
@@ -289,7 +289,7 @@ var db = {
 					+	'AND diigo.local_id=notes.id ORDER BY notes.updated';
 				row = [r.list, '', ''];
 			}
-			$.ajax({ url: server_url + "loadTitles", data:{userId:userId}, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "loadTitles", data:{userId:userId}, success: function(data){
 					callback(null, {rows:eval(data)});
 				  }});
 			return;
@@ -297,7 +297,7 @@ var db = {
 		case 'load_note':
 			query = 'SELECT * FROM notes WHERE id=?';
 			row = [r.id];
-			$.ajax({ url: server_url + "loadNote", data:{id:r.id}, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "loadNote", data:{id:r.id}, success: function(data){
 					callback(null, {rows:eval(data)});
 				  }});
 			return;
@@ -366,7 +366,7 @@ var db = {
 			o.id = r.id;
 			o.userId = userId;
 			o.timestamp = new Date().getTime();
-			$.ajax({ url: server_url + "saveNote", data:o, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "saveNote", data:o, success: function(data){
 					callback(null, null);
 				  }});
 			return;
