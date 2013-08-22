@@ -1,6 +1,4 @@
-var server_domain = "http://localhost:9081/webapp/";
-var server_url = server_domain + "note/";
-var userId = 'ccc';
+
 var db = {
 	open: function() {
 		var database = openDatabase('noteapp', '', 'Note by Diigo', 5*1024*1024, db.notes);
@@ -169,6 +167,8 @@ var db = {
 	
 	tx: function(r, callback) {
 		var query, row;
+		//remove url
+		r.url = '';
 		switch(r.name) {
 		case 'create_notes':
 			query = 'CREATE TABLE IF NOT EXISTS notes ('
@@ -228,7 +228,7 @@ var db = {
 		case 'add':
 			query = 'INSERT INTO notes (title, desc, url, list, tag) VALUES (?, ?, ?, ?, ?);';
 			row = ['', '', r.from=='app' ? '' : tab.url, '', ''];
-			$.ajax({ url: server_url + "addNote", data:{userId:userId, title:'', desc:'', url:r.from=='app' ? '' : tab.url, list:'', tag:'', timestamp:new Date().getTime()}, success: function(data){
+			$.ajax({ url: server_url + "addNote", data:{userId:userId, title:'', desc:'', url:'', list:'', tag:'', timestamp:new Date().getTime()}, success: function(data){
 					callback(null, {insertId:data});
 				  }});
 			
@@ -289,10 +289,18 @@ var db = {
 					+	'AND diigo.local_id=notes.id ORDER BY notes.updated';
 				row = [r.list, '', ''];
 			}
+			$.ajax({ url: server_url + "loadTitles", data:{userId:userId}, success: function(data){
+					callback(null, {rows:eval(data)});
+				  }});
+			return;
 			break;
 		case 'load_note':
 			query = 'SELECT * FROM notes WHERE id=?';
 			row = [r.id];
+			$.ajax({ url: server_url + "loadNote", data:{id:r.id}, success: function(data){
+					callback(null, {rows:eval(data)});
+				  }});
+			return;
 			break;
 		case 'search':
 			var s = r.terms;
@@ -363,6 +371,7 @@ var db = {
 				  }});
 			return;
 		}
+		console.log(query);
 		db.open().transaction(
 			function(tx) {
 				tx.executeSql(query, row, callback);

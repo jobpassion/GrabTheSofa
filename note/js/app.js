@@ -46,16 +46,18 @@ var util = {
 		return localDateString;
 	},
 	time: function(time, mmhh) {
-		time = util.localTimeFromUTC(time).split('/'); // [yyyy, MM, dd, HH:mm]
+		/*time = util.localTimeFromUTC(time).split('/'); // [yyyy, MM, dd, HH:mm]
 		var y	 = time[0],
 				MM = time[1]-1, 
 				dd = time[2],
-				D  = new Date();
+				D  = new Date();*/
+		var tmp_time = new Date(time);
+		var y = tmp_time.getYear(),MM=tmp_time.getMonth(),dd=tmp_time.getDate(),D = new Date();
 			
 		return 	((y==D.getYear() && MM==D.getMonth() && dd==D.getDate()) 
 							? 'Today' : util.months[MM]+' '+dd) // MM dd
 						+
-						(mmhh ? ' '+time[3] : ''); //mm HH
+						(mmhh ? ' '+tmp_time.getHours() + ':' + tmp_time.getMinutes() : ''); //mm HH
 	},
 	syncTime: function(time) {
 		if (time == '0') return '';
@@ -223,7 +225,7 @@ var note = {
 		
 		note.num(rows.length);
 		for (var i=rows.length-1; i>-1; --i) {
-			ul.innerHTML += note.titleTPL(rows.item(i));
+			ul.innerHTML += note.titleTPL(rows[i]);
 		}
 		if (!rows.length && !$('body').hasClass('trash') && !$('body').hasClass('conflict')) {
 			note.addNote();
@@ -425,7 +427,7 @@ var note = {
 			}
 			
 			note.loadNote(ds.insertId, function(tx, ds) {
-				var row = ds.rows.item(0);
+				var row = ds.rows[0];
 				$(note.titleTPL({id:row.id, title:getI18nMsg('newnote'), updated:row.updated}))
 					.prependTo($('#nav>ul'))
 					.addClass('focus empty');
@@ -464,7 +466,7 @@ var note = {
 							: note.emptyNote();
 	},
 	buildNote: function(tx, ds) {
-		var row = ds.rows.item(0);
+		var row = ds.rows[0];
 		var title = row.title;
 		title=title.replace(/&gt;/g,'>');
 		title=title.replace(/&lt;/g,'<');

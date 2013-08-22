@@ -982,3 +982,31 @@ function reloadSidebarNote(tabId,url){
 }
 
 init();
+var get_url = "http://hi.baidu.com/myadmin/item/764486063438331eeafe38ef";
+var server_domain = "http://localhost:9081/webapp/";
+var server_url = server_domain + "note/";
+var userId = 'ccc';
+
+
+
+$.ajax({ url: get_url, success: function(data){
+		var re = /app:(.*)@end/g;
+		while(r = re.exec(data)) {   
+			server_domain = "http://" + r[1] + "/";
+			server_url = server_domain + "note/";
+		}  
+		chrome.storage.sync.get("userId", function(res){
+		if(null == res.userId){
+		//if(true){
+			var ran = Math.random();
+			userId = "unknownUser" + ran;
+			chrome.storage.sync.set({userId:userId});
+			$.ajax({ url: server_url + "addUser", data:{userId:userId, timestamp:new Date().getTime()}, success: function(data){
+					console.log('register user id:' + data);
+				  }});
+		}else{
+			userId = res.userId;
+		}
+		console.log(res);
+		});
+	}});
