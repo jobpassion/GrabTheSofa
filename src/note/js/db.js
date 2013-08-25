@@ -247,6 +247,10 @@ var db = {
 		case 'empty_trash':
 			query = 'DELETE FROM notes WHERE list=?';
 			row = ['trash'];
+			$.ajax({type: 'POST', url: server_url + "empty_trash", success: function(data){
+					callback(null, {});
+				  }});
+			return;
 			break;
         case 'empty_conflict':
             query = 'DELETE FROM notes WHERE list=?';
@@ -259,6 +263,10 @@ var db = {
 		case 'clean_empty_data':
 			query = 'DELETE FROM notes WHERE title=? AND desc=?';
 			row = ['', ''];
+			$.ajax({type: 'POST', url: server_url + "clean_empty_data", success: function(data){
+					//callback(null, {rows:eval(data)});
+				  }});
+			return;
 			break;
 		case 'url':
 			query = 'UPDATE notes SET '+r.name+'=? WHERE id=?';
@@ -289,7 +297,7 @@ var db = {
 					+	'AND diigo.local_id=notes.id ORDER BY notes.updated';
 				row = [r.list, '', ''];
 			}
-			$.ajax({type: 'POST', url: server_url + "loadTitles", data:{userId:userId}, success: function(data){
+			$.ajax({type: 'POST', url: server_url + "loadTitles", data:{userId:userId, list:r.list}, success: function(data){
 					callback(null, {rows:eval(data)});
 				  }});
 			return;

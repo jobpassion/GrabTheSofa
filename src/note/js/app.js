@@ -798,7 +798,10 @@ var note = {
 
     reloadNote:function(){
         var currentNoteId = $("li.focus")[0] && $("li.focus")[0].dataset['id'];
-        note.loadNav("",function(){
+		var list = "";
+		if($('body').hasClass('trash'))
+			list = "trash";
+        note.loadNav(list,function(){
             if(currentNoteId){
                 note.loadNote(currentNoteId,function(){});
             }else{

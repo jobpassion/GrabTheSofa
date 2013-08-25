@@ -989,24 +989,24 @@ var userId = 'ccc';
 
 
 
-$.ajax({ url: get_url, success: function(data){
-		var re = /app:(.*)@end/g;
-		while(r = re.exec(data)) {   
-			server_domain = "http://" + r[1] + "/";
-			server_url = server_domain + "note/";
-		}  
-		chrome.storage.sync.get("userId", function(res){
-		if(null == res.userId){
-		//if(true){
-			var ran = Math.random();
-			userId = "unknownUser" + ran;
-			chrome.storage.sync.set({userId:userId});
-			$.ajax({ url: server_url + "addUser", data:{userId:userId, timestamp:new Date().getTime()}, success: function(data){
-					console.log('register user id:' + data);
-				  }});
-		}else{
-			userId = res.userId;
-		}
-		console.log(res);
-		});
-	}});
+//$.ajax({ url: get_url, success: function(data){
+//		var re = /app:(.*)@end/g;
+//		while(r = re.exec(data)) {   
+//			server_domain = "http://" + r[1] + "/";
+//			server_url = server_domain + "note/";
+//		}  
+//		chrome.storage.sync.get("userId", function(res){
+//		if(null == res.userId){
+//		//if(true){
+//			var ran = Math.random();
+//			userId = "unknownUser" + ran;
+//			chrome.storage.sync.set({userId:userId});
+//			$.ajax({ url: server_url + "addUser", data:{userId:userId, timestamp:new Date().getTime()}, success: function(data){
+//					console.log('register user id:' + data);
+//				  }});
+//		}else{
+//			userId = res.userId;
+//		}
+//		console.log(res);
+//		});
+//	}});
