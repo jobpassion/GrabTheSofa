@@ -99,6 +99,7 @@ $('document').ready(function(){
 				// }
 				//alert(_data.length);
 				chrome.storage.local.set({init:true, jobs:_data});
+				chrome.storage.local.set({dirty:true});
 			  },
 			  
 			  columns: [
