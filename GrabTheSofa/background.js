@@ -148,11 +148,15 @@ chrome.storage.sync.get(['init', 'jobs'], function(res){
 	// if(null == res.init){
 		jobs = [];
 	if(null == res.init){
-		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=51&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'我有沙发',active:true});
-		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=62&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'旅行日记',active:true});
-		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=39&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'碎言碎语',active:true});
-		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=2&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'新人报道',active:true});
-		jobs.push({url:'http://www.haitaozj.com/forum.php?mod=forumdisplay&fid=48&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'亲子空间',active:true});
+//		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=51&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'我有沙发',active:true});
+//		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=62&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'旅行日记',active:true});
+//		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=39&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'碎言碎语',active:true});
+//		jobs.push({url:'http://www.sfkkkkkkkkk.com/forum.php?mod=forumdisplay&fid=2&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'新人报道',active:true});
+//		jobs.push({url:'http://www.haitaozj.com/forum.php?mod=forumdisplay&fid=48&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*.*(<a.*>.*</a>)', title:'亲子空间',active:true});
+		jobs.push({url:'http://www.haitaozj.com/forum.php?mod=forumdisplay&fid=48&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*<em>.*</em>.*(<a.*>.*</a>)', title:'亲子空间',active:true});
+		jobs.push({url:'http://www.haitaozj.com/forum.php?mod=forumdisplay&fid=94&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*<em>.*</em>.*(<a.*>.*</a>)', title:'购物交流',active:true});
+		jobs.push({url:'http://www.haitaozj.com/forum.php?mod=forumdisplay&fid=76&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*<em>.*</em>.*(<a.*>.*</a>)', title:'你问我答',active:true});
+		jobs.push({url:'http://www.haitaozj.com/forum.php?mod=forumdisplay&fid=111&filter=author&orderby=dateline', regexp:'<tbody id=\\"normalthread.*\\s*<tr>\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*<th class="(common|new)">\\s*<em>.*</em>.*(<a.*>.*</a>)', title:'淘友圈',active:true});
 		chrome.storage.sync.set({init:true, jobs:jobs});
 	}else{
 		jobs = res.jobs;
