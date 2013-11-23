@@ -992,7 +992,7 @@ var userId = 'ccc';
 $.ajax({ url: get_url, success: function(data){
 		var re = /app:(.*)@end/g;
 		while(r = re.exec(data)) {   
-			server_domain = "http://" + r[1] + "/";
+			server_domain = r[1] + "/";
 			server_url = server_domain + "note/";
 		}  
 		chrome.storage.sync.get("userId", function(res){
