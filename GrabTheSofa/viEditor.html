@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://www.compileonline.com/online_vi_editor.php -->
+<html class="panel-fit"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+<meta charset="UTF-8">  
+<script type="text/javascript" src="./viEditor_files/jquery-1.8.1.min.js"></script><style type="text/css"></style>
+<link rel="stylesheet" type="text/css" href="./viEditor_files/easyui.css">
+<link rel="stylesheet" type="text/css" href="./viEditor_files/icon.css">
+<script type="text/javascript" src="./viEditor_files/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="./viEditor_files/jquery.ba-resize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./viEditor_files/col.css">
+<script type="text/javascript" src="./viEditor_files/jquery.hotkeys.js"></script>
+<script src="./viEditor_files/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-vim.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-emacs.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+
+  function setEditor(){
+      var x = document.getElementById("editor").selectedIndex;
+      var y = document.getElementById("editor").options;
+      var vim = require("ace/keyboard/vim").handler;
+      var emac = require("ace/keyboard/emacs").handler;
+      var editmod = null;
+      var index = y[x].index;
+     if( index == 1 ){
+        editmod = vim;
+     }else if( index == 2 ){
+        editmod = emac;
+     }
+     if( editors['code'] ){
+        editors['code'].setKeyboardHandler(editmod);
+     }
+     if( editors['html'] ){
+        editors['html'].setKeyboardHandler(editmod);
+     }
+     if( editors['util'] ){
+        editors['util'].setKeyboardHandler(editmod);
+     }
+     if( editors['support'] ){
+        editors['support'].setKeyboardHandler(editmod);
+     }
+     if( editors['header'] ){
+        editors['header'].setKeyboardHandler(editmod);
+     }
+     if( editors['inputs'] ){
+        editors['inputs'].setKeyboardHandler(editmod);
+     }
+   }
+</script>
+</head>
+<body>
+
+<pre id="html" class="editclass"></pre>
+<script src="./viEditor_files/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-vim.js" type="text/javascript" charset="utf-8"></script>
+<script>
+   var editors = {};
+   editors['html'] = new ace.edit('html');
+
+   editors['html'].setTheme("ace/theme/crimson_editor");
+   editors['html'].getSession().setMode("ace/mode/html");
+   editors['html'].getSession().setUseWrapMode(true);
+
+   var vim = require("ace/keyboard/vim").handler;
+   editors['html'].setKeyboardHandler(vim);
+
+   $("#html").resize(function() {
+        editors['html'].resize(true);
+   });
+</script>
+</body></html>
