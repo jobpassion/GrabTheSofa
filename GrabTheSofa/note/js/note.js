@@ -66,25 +66,29 @@ var util = {
 var note = {
 	init: function(request) {
 		var item = request.item;
-		$('#editor>textarea').rte({
-			css: ['css/text.css', 'css/notearea.css'],
-			width: 260
-		}); 
-		
-		var noteFrame = $('#editor>.rte-zone>iframe')[0],
-			noteDoc = noteFrame.contentDocument,
-			noteBody = noteDoc.body;
+		//$('#editor>textarea').rte({
+		//	css: ['css/text.css', 'css/notearea.css'],
+		//	width: 260
+		//}); 
+		//
+		//var noteFrame = $('#editor>.rte-zone>iframe')[0],
+		//	noteDoc = noteFrame.contentDocument,
+		//	noteBody = noteDoc.body;
 		$('#title>input').bind('textchange', 'title', function(e) {
 			util.disableAutoType();
 			note.save(e);
 		});
-		$(noteBody).bind('textchange', 'desc', function(e) {
-			util.cleanStyles(this); //this->noteBody
-			note.save(e);
-		});
-		$(noteDoc).keyup(function(e) {
-			if(e.keyCode==13) util.disableAutoType();
-		});
+		//$(noteBody).bind('textchange', 'desc', function(e) {
+		//	util.cleanStyles(this); //this->noteBody
+		//	note.save(e);
+		//});
+		//$(noteDoc).keyup(function(e) {
+		//	if(e.keyCode==13) util.disableAutoType();
+		//});
+    editors['vihtml'].on('change', function(e){
+        note.save({data:'desc'});
+    });
+
 		
 		$('#action').click(function(e) {
 			if (e.target.tagName!='LI') return;
@@ -101,11 +105,12 @@ var note = {
 //		console.log('100',item);
 		if (item) {
 			$('#title input').val(item.title);
-			noteBody.innerHTML = item.desc+request.selection;
+			//noteBody.innerHTML = item.desc+request.selection;
+      editors['vihtml'].setValue(item.desc+request.selection, -1)
 			//$(noteBody).html(item.desc);
 			noteId = parseInt(item.id);
 			//util.sendRequest({name:'get_selection'});
-			note.save({data:'desc'});
+			//note.save({data:'desc'});
 		} 
 		else 
 			note.save({data:'add'});
@@ -158,7 +163,8 @@ var note = {
                 {
                     name:reqName,
                     id:noteId,
-                    data: $($('#editor>.rte-zone>iframe')[0].contentDocument.body).html()
+                    //data: $($('#editor>.rte-zone>iframe')[0].contentDocument.body).html()
+                    data: editors['vihtml'].getValue()
                 }
                 );
         }
@@ -183,7 +189,8 @@ var note = {
                 clearTimeout(timerId);
                 timerId = null;
                 delay = 1000;
-                note.processImages(saveDesc);
+                //note.processImages(saveDesc);
+                saveDesc();
                 break;
         }
     },
@@ -191,8 +198,11 @@ var note = {
         var $t = $('#title input');
         if ($t.hasClass('typed')) return;
 		
-        var doc = util.getNoteDoc();
-        var text = doc.body.textContent;
+        //var doc = util.getNoteDoc();
+        var text = editors['vihtml'].getValue();
+        if(text.indexOf('\n') != -1){
+          text = text.substring(0, text.indexOf('\n'));
+        }
         if (text.length>30) text = text.substr(0, 30);
         $t.val(text);
         note.save({
@@ -202,16 +212,19 @@ var note = {
         });
     },
     updatedContent:function(request){
-        var item = request.item,
-            noteFrame = $('#editor>.rte-zone>iframe')[0],
-            noteDoc = noteFrame.contentDocument,
-            noteBody = noteDoc.body;
+        var item = request.item;
+            //noteFrame = $('#editor>.rte-zone>iframe')[0],
+            //noteDoc = noteFrame.contentDocument,
+            //noteBody = noteDoc.body;
         if(item){
+            editors['vihtml'].setValue(item.desc, -1)
             $('#title input').val(item.title);
-            noteBody.innerHTML = item.desc;
+            //noteBody.innerHTML = item.desc;
         }
     }
 }
+
+
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     switch(request.name) {
@@ -250,5 +263,42 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 });
 
 $(document).ready(function() {
+  window.inputMode = 'normal';
+  window.editors = {};
+  editors['vihtml'] = new ace.edit('vihtml');
+
+  editors['vihtml'].setTheme("ace/theme/crimson_editor");
+  editors['vihtml'].getSession().setMode("ace/mode/html");
+  editors['vihtml'].getSession().setUseWrapMode(true);
+
+  updateKeyboardHandler();
+
+  $("#vihtml").resize(function() {
+    editors['vihtml'].resize(true);
+  });
+
+  $('#note_save').click(function(){
+    editors['vihtml']._signal('save');
+  });
+  $('#mode_change').click(function(){
+    if(window.inputMode == 'vi'){
+      window.inputMode = 'normal'
+    $('#mode_change').html('Normal Mode');
+    }else{
+      window.inputMode = 'vi'
+    $('#mode_change').html('VI Mode');
+    }
+    updateKeyboardHandler();
+  })
+
+  function updateKeyboardHandler(){
+    if(inputMode=='vi'){
+      var vim = require("ace/keyboard/vim").handler;
+      editors['vihtml'].setKeyboardHandler(vim);
+    }else{
+      editors['vihtml'].setKeyboardHandler(null);
+    }
+    editors['vihtml'].focus();
+  }
 	top.postMessage('check_url', '*');		// send msg to content.js
 });

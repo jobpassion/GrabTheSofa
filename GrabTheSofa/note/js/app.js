@@ -472,7 +472,13 @@ var note = {
 		title=title.replace(/&lt;/g,'<');
 		$('#title>h1>input').val(title);
 		$('#title>h1>time').html(util.time(row.updated, true));
-		$('#desc>div').html(row.desc).focus().select();
+    //if(inputMode == 'vi'){
+      editors['vihtml'].setValue(row.desc, -1)
+      editors['vihtml'].focus();
+    //}else{
+    //  //$('#desc>div').html(row.desc).focus().select();
+    //  $('#html').html(row.desc).focus().select();
+    //}
         $('#contenttmp').html(row.desc);
 		util.fixImageSize($('#desc>div')[0]);
 	},
@@ -864,7 +870,7 @@ $(document).ready(function() {
 		$('#noteSection').click(note.clickNote);
 		// when switch page (e.g all to trash), should rebind search
 		$('#search>input').bind('textchange', note.search);
-		$('#title>h1>input').bind('textchange', function(e) {
+		$('#title>h1>input').bind('change', function(e) {
 			var text = this.value;
 			text=text.replace(/>/g,'&gt;');
 			text=text.replace(/</g,'&lt;');
@@ -873,13 +879,17 @@ $(document).ready(function() {
 			});
 			$('.focus.empty').removeClass('empty');	
 		});
-		$('#desc>div')
-			.bind('textchange', function(e) {
-				util.cleanStyles(this);
-				util.fixImageSize(this);
-                $('#contenttmp').html($('#desc>div').html());
+		//$('#desc>div')
+		//	.bind('textchange', function(e) {
+    editors['vihtml'].on('save', function(e){
+				//util.cleanStyles(this);
+				//util.fixImageSize(this);
+                $('#contenttmp').html(editors['vihtml'].getValue());
 				util.processImages(function() {
-					db.tx({name: 'desc', id: note.focusId, data: $('#desc>div').html()}, function(){});
+					db.tx({name: 'desc', id: note.focusId, data: editors['vihtml'].getValue()}, function(){
+            $('#alert').fadeIn('slow');;
+            //alert('save successful');
+          });
 					note.updateTitle();
 					$('.focus.empty').removeClass('empty');
 				});
@@ -928,8 +938,51 @@ $(document).ready(function() {
 			 // addads();
 		}
 	});
+
+  window.inputMode = 'vi';
+  //if(inputMode=='vi'){
+  //  $('#html').hide();
+  //}else{
+  //  $('#vihtml').hide();
+  //}
+                             window.editors = {};
+                             editors['vihtml'] = new ace.edit('vihtml');
+                          
+                             editors['vihtml'].setTheme("ace/theme/crimson_editor");
+                             editors['vihtml'].getSession().setMode("ace/mode/html");
+                             editors['vihtml'].getSession().setUseWrapMode(true);
+                          
+                             updateKeyboardHandler();
+                          
+                             $("#vihtml").resize(function() {
+                                  editors['vihtml'].resize(true);
+                             });
+
+                             $('#note_save').click(function(){
+                               editors['vihtml']._signal('save');
+                              $('#alert').fadeOut('fast');;
+                             });
+                             $('#mode_change').click(function(){
+                             if(window.inputMode == 'vi'){
+                             window.inputMode = 'normal'
+$('#mode_change').html('Normal Mode');
+                             }else{
+                              window.inputMode = 'vi'
+$('#mode_change').html('VI Mode');
+                             }
+                             updateKeyboardHandler();
+                             })
 });
 
+function updateKeyboardHandler(){
+                             if(inputMode=='vi'){
+                             var vim = require("ace/keyboard/vim").handler;
+                             editors['vihtml'].setKeyboardHandler(vim);
+                             }else{
+                             editors['vihtml'].setKeyboardHandler(null);
+                             }
+      editors['vihtml'].focus();
+}
 
 
 

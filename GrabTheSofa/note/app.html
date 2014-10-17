@@ -15,6 +15,56 @@
         <script type="text/javascript" src="js/jqModal.js"></script>
 		<script type="text/javascript" src="js/process.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
+
+
+
+<script type="text/javascript" src="./viEditor_files/jquery-1.8.1.min.js"></script><style type="text/css"></style>
+<link rel="stylesheet" type="text/css" href="./viEditor_files/easyui.css">
+<link rel="stylesheet" type="text/css" href="./viEditor_files/icon.css">
+<script type="text/javascript" src="./viEditor_files/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="./viEditor_files/jquery.ba-resize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./viEditor_files/col.css">
+<script type="text/javascript" src="./viEditor_files/jquery.hotkeys.js"></script>
+<script src="./viEditor_files/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-vim.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-emacs.js" type="text/javascript" charset="utf-8"></script>
+<!--script type="text/javascript">
+
+
+  function setEditor(){
+      var x = document.getElementById("editor").selectedIndex;
+      var y = document.getElementById("editor").options;
+      var vim = require("ace/keyboard/vim").handler;
+      var emac = require("ace/keyboard/emacs").handler;
+      var editmod = null;
+      var index = y[x].index;
+     if( index == 1 ){
+        editmod = vim;
+     }else if( index == 2 ){
+        editmod = emac;
+     }
+     if( editors['code'] ){
+        editors['code'].setKeyboardHandler(editmod);
+     }
+     if( editors['html'] ){
+        editors['html'].setKeyboardHandler(editmod);
+     }
+     if( editors['util'] ){
+        editors['util'].setKeyboardHandler(editmod);
+     }
+     if( editors['support'] ){
+        editors['support'].setKeyboardHandler(editmod);
+     }
+     if( editors['header'] ){
+        editors['header'].setKeyboardHandler(editmod);
+     }
+     if( editors['inputs'] ){
+        editors['inputs'].setKeyboardHandler(editmod);
+     }
+   }
+</script-->
+
+
     </head>
     <body>
 			<script type="text/javascript" src="js/cga.js"></script>
@@ -24,6 +74,9 @@
                 <span>[ X ]</span>
             </div>
 			<div id="outerWrap">
+      <div id="alert" class="alert alert-success" style="display:none" role="alert">
+        <strong>Successful!</strong> You successfully save the note.
+      </div>
 				
 				<div id="wrap">
 					<section id="navSection">
@@ -136,6 +189,8 @@
 							</div>
 							<div id="noteWrapper">
 									<section id="top">
+                    <button id="note_save" type="button" class="btn btn-xs btn-warning">SAVE</button>
+                    <button id="mode_change" type="button" class="btn btn-xs btn-success">VI Mode</button>
 											<span id="restore" class="btnDark">Restore</span>
 											<span id="remove"></span>
 									</section>
@@ -147,7 +202,26 @@
 													</h1>
 											</header>
 											<section id="desc">
-													<div contentEditable="true"></div>
+													<!--div id="html" contentEditable="true"></div-->
+                          <pre id="vihtml" class="editclass" style="font-size: 16px;line-height: 22px;"></pre>
+
+                          <script src="./viEditor_files/ace.js" type="text/javascript" charset="utf-8"></script>
+                          <script src="./viEditor_files/keybinding-vim.js" type="text/javascript" charset="utf-8"></script>
+                          <!--script>
+                             var editors = {};
+                             editors['html'] = new ace.edit('html');
+                          
+                             editors['html'].setTheme("ace/theme/crimson_editor");
+                             editors['html'].getSession().setMode("ace/mode/html");
+                             editors['html'].getSession().setUseWrapMode(true);
+                          
+                             var vim = require("ace/keyboard/vim").handler;
+                             editors['html'].setKeyboardHandler(vim);
+                          
+                             $("#html").resize(function() {
+                                  editors['html'].resize(true);
+                             });
+                          </script-->
 											</section>
                                             <div id="contenttmp"></div>
 									</article>

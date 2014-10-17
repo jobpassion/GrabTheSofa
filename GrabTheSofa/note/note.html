@@ -13,6 +13,19 @@
         <script type="text/javascript" src="plugin/jquery.rte/jquery.rte.tb.js"></script>
         <script type="text/javascript" src="js/process.js"></script>
         <script type="text/javascript" src="js/note.js"></script>
+
+
+
+<script type="text/javascript" src="./viEditor_files/jquery-1.8.1.min.js"></script><style type="text/css"></style>
+<link rel="stylesheet" type="text/css" href="./viEditor_files/easyui.css">
+<link rel="stylesheet" type="text/css" href="./viEditor_files/icon.css">
+<script type="text/javascript" src="./viEditor_files/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="./viEditor_files/jquery.ba-resize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./viEditor_files/col.css">
+<script type="text/javascript" src="./viEditor_files/jquery.hotkeys.js"></script>
+<script src="./viEditor_files/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-vim.js" type="text/javascript" charset="utf-8"></script>
+<script src="./viEditor_files/keybinding-emacs.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body class="maximize">
 				<script type="text/javascript" src="js/cga.js"></script>
@@ -20,6 +33,8 @@
         <div id="wrapper">
             <div id="wrapperInner">
                 <div id="action" class="maximize">
+                    <!--button id="note_save" type="button">SAVE</button>
+                    <button id="mode_change" type="button">VI Mode</button-->
 										<ul>
 												<li id="app"></li>
 												<li id="minimize"></li>
@@ -31,8 +46,12 @@
                     <input type="text" value="" />
                 </div>
                 <!-- <div id="topActions"><input type="button" id="add" value="Add" /><input type="button" id="delete" value="Delete" /></div> -->
-                <div id="editor">
-                    <textarea cols="30" rows="10"></textarea>
+                <div id="editor" style="width:100%">
+                    <!--textarea cols="30" rows="10"></textarea-->
+
+                    <pre id="vihtml" class="editclass" style="font-size: 16px;line-height: 22px;margin-left:30px;margin-top:-8px;"></pre>
+                    <script src="./viEditor_files/ace.js" type="text/javascript" charset="utf-8"></script>
+                    <script src="./viEditor_files/keybinding-vim.js" type="text/javascript" charset="utf-8"></script>
                 </div>
                 <!-- <div id="actions">
 		<input type="button" value="Save" id="save" />

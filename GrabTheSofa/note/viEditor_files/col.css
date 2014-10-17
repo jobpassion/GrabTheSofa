@@ -37,3 +37,6 @@ div#loading{
 .tabs-hide {
   display:none !important;
 }
+.ace_selection{
+    background:#FF6666;
+}
